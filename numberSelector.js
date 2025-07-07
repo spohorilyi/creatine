@@ -88,22 +88,28 @@ export function createNumberSelector({
   });
 
   // Wheel events for scroll
+  let wheelDeltaAccum = 0;
+  const wheelThreshold = 17; // Increase this to make it less sensitive
   el.addEventListener(
     "wheel",
     function (e) {
       e.preventDefault();
       let delta = e.deltaY || e.detail || e.wheelDelta;
-      if (delta > 0) {
-        value = clamp(value - step);
-      } else if (delta < 0) {
+      wheelDeltaAccum += delta;
+      if (wheelDeltaAccum <= -wheelThreshold) {
         value = clamp(value + step);
+        updateDisplay();
+        saveValue();
+        wheelDeltaAccum = 0;
+      } else if (wheelDeltaAccum >= wheelThreshold) {
+        value = clamp(value - step);
+        updateDisplay();
+        saveValue();
+        wheelDeltaAccum = 0;
       }
-      updateDisplay();
-      saveValue();
     },
     { passive: false },
   );
-
   // Keyboard accessibility
   el.addEventListener("keydown", function (e) {
     if (e.key === "ArrowUp") {
