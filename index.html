@@ -7,199 +7,65 @@
     <title>Creatine</title>
   </head>
   <body>
+    <h1 style="font-size: 5rem; text-align: center">Creatine</h1>
     <div
       style="
         display: flex;
         flex-direction: column;
+        justify-content: center;
         align-items: center;
-        margin-top: 2em;
       "
     >
-      <label
-        for="number-selector"
-        style="
-          font-size: 2.5em;
-          font-weight: bold;
-          margin-bottom: 0.2em;
-          letter-spacing: 0.05em;
-          text-transform: uppercase;
-          color: #222;
-          text-align: center;
-          line-height: 1.1;
-        "
-        >SQUAT</label
-      >
+      <script type="module" src="./numberSelector.js"></script>
       <div
+        id="squat-control"
         style="
           display: flex;
-          flex-direction: row;
+          flex-direction: column;
           align-items: center;
-          justify-content: center;
-          gap: 1em;
+          margin-bottom: 2.5em;
         "
-      >
-        <div
-          id="percentages-row"
-          style="
-            display: flex;
-            flex-direction: row;
-            gap: 1em;
-            font-size: 2em;
-            justify-content: flex-end;
-            align-items: center;
-            min-width: 10ch;
-            font-family:
-              &quot;SFMono-Regular&quot;, Consolas, &quot;Liberation Mono&quot;,
-              Menlo, Courier, monospace;
-          "
-        >
-          <!-- Values will be filled by JS -->
-        </div>
-        <div
-          id="number-selector"
-          tabindex="0"
-          style="
-            user-select: none;
-            width: 4ch;
-            height: 60px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2em;
-            font-family:
-              &quot;SFMono-Regular&quot;, Consolas, &quot;Liberation Mono&quot;,
-              Menlo, Courier, monospace;
-            border: 2px solid #888;
-            border-radius: 8px;
-            background: #f9f9f9;
-            box-shadow: 0 2px 8px #0001;
-            touch-action: pan-y;
-            cursor: pointer;
-            box-sizing: border-box;
-            padding: 0.6em;
-            margin: 0;
-          "
-        >
-          0
-        </div>
-        <span
-          id="number-kg"
-          style="
-            font-size: 2em;
-            margin-left: -0.3em;
-            font-family:
-              &quot;SFMono-Regular&quot;, Consolas, &quot;Liberation Mono&quot;,
-              Menlo, Courier, monospace;
-          "
-          >kg</span
-        >
-      </div>
+      ></div>
+      <div
+        id="bench-control"
+        style="
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          margin-bottom: 2.5em;
+        "
+      ></div>
+      <div
+        id="deadlift-control"
+        style="display: flex; flex-direction: column; align-items: center"
+      ></div>
+      <script type="module">
+        import { createNumberSelector } from "./numberSelector.js";
+        createNumberSelector({
+          container: document.getElementById("squat-control"),
+          label: "SQUAT",
+          storageKey: "squat-value",
+          min: 20,
+          max: 160,
+          step: 1,
+        });
+        createNumberSelector({
+          container: document.getElementById("bench-control"),
+          label: "BENCH",
+          storageKey: "bench-value",
+          min: 20,
+          max: 120,
+          step: 1,
+        });
+        createNumberSelector({
+          container: document.getElementById("deadlift-control"),
+          label: "DEADLIFT",
+          storageKey: "deadlift-value",
+          min: 20,
+          max: 200,
+          step: 1,
+        });
+      </script>
     </div>
-
-    <script>
-      (function () {
-        const min = 20;
-        const max = 160;
-        const step = 1;
-        const STORAGE_KEY = "number-selector-value";
-        const el = document.getElementById("number-selector");
-        const percentsEl = document.getElementById("percentages-row");
-        let startY = null;
-        let lastY = null;
-        let touchActive = false;
-
-        // Load initial value from localStorage or default to min
-        let value = parseInt(localStorage.getItem(STORAGE_KEY), 10);
-        if (isNaN(value)) value = min;
-
-        function clamp(val) {
-          return Math.max(min, Math.min(max, val));
-        }
-
-        function updateDisplay() {
-          el.textContent = String(value).padStart(3, "\u00A0");
-          const value100 = Math.round(value / 0.85);
-          const value65 = Math.round(value100 * 0.65);
-          const pad = (v) => String(v).padStart(3, "\u00A0");
-          percentsEl.innerHTML =
-            `<span>${pad(value100)}kg</span>` +
-            `<span>${pad(value65)}kg</span>`;
-          const kgEl = document.getElementById("number-kg");
-          kgEl.textContent = "kg";
-          kgEl.style.fontFamily =
-            '"SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace';
-        }
-
-        function saveValue() {
-          localStorage.setItem(STORAGE_KEY, value);
-        }
-
-        // Touch events for swipe
-        el.addEventListener("touchstart", function (e) {
-          if (e.touches.length === 1) {
-            touchActive = true;
-            startY = e.touches[0].clientY;
-            lastY = startY;
-          }
-        });
-
-        el.addEventListener("touchmove", function (e) {
-          if (!touchActive) return;
-          const y = e.touches[0].clientY;
-          const delta = y - lastY;
-          // Sensitivity: 30px per step
-          if (Math.abs(y - startY) >= 30) {
-            let steps = Math.floor((startY - y) / 30);
-            if (steps !== 0) {
-              value = clamp(value + steps * step);
-              updateDisplay();
-              saveValue();
-              startY = y; // reset start point for next swipe
-            }
-          }
-          lastY = y;
-        });
-
-        el.addEventListener("touchend", function (e) {
-          touchActive = false;
-          startY = null;
-          lastY = null;
-        });
-
-        // Wheel events for scroll
-        el.addEventListener(
-          "wheel",
-          function (e) {
-            e.preventDefault();
-            let delta = e.deltaY || e.detail || e.wheelDelta;
-            if (delta > 0) {
-              value = clamp(value - step);
-            } else if (delta < 0) {
-              value = clamp(value + step);
-            }
-            updateDisplay();
-            saveValue();
-          },
-          { passive: false },
-        );
-
-        // Keyboard accessibility
-        el.addEventListener("keydown", function (e) {
-          if (e.key === "ArrowUp") {
-            value = clamp(value + step);
-            updateDisplay();
-            saveValue();
-            e.preventDefault();
-          } else if (e.key === "ArrowDown") {
-            value = clamp(value - step);
-            updateDisplay();
-            saveValue();
-            e.preventDefault();
-          }
-        });
-
-        updateDisplay();
-      })();
-    </script>
   </body>
 </html>
