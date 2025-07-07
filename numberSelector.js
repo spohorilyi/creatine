@@ -60,7 +60,7 @@ export function createNumberSelector({
   let startY = null,
     lastY = null,
     touchActive = false;
-  const touchThreshold = 30; // px per step for touch
+  const touchThreshold = 20; // px per step for touch
   el.addEventListener("touchstart", function (e) {
     if (e.touches.length === 1) {
       touchActive = true;
