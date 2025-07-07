@@ -60,6 +60,7 @@ export function createNumberSelector({
   let startY = null,
     lastY = null,
     touchActive = false;
+  const touchThreshold = 30; // px per step for touch
   el.addEventListener("touchstart", function (e) {
     if (e.touches.length === 1) {
       touchActive = true;
@@ -70,8 +71,8 @@ export function createNumberSelector({
   el.addEventListener("touchmove", function (e) {
     if (!touchActive) return;
     const y = e.touches[0].clientY;
-    if (Math.abs(y - startY) >= 30) {
-      let steps = Math.floor((startY - y) / 30);
+    if (Math.abs(y - startY) >= touchThreshold) {
+      let steps = Math.floor((startY - y) / touchThreshold);
       if (steps !== 0) {
         value = clamp(value + steps * step);
         updateDisplay();
@@ -89,7 +90,7 @@ export function createNumberSelector({
 
   // Wheel events for scroll
   let wheelDeltaAccum = 0;
-  const wheelThreshold = 17; // Increase this to make it less sensitive
+  const wheelThreshold = 17; // Increase this to make it less sensitive for mouse
   el.addEventListener(
     "wheel",
     function (e) {
