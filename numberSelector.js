@@ -16,7 +16,7 @@ export function createNumberSelector({
 }) {
   // Create DOM structure
   container.innerHTML = `
-    <label style="font-size:2.5em;font-weight:bold;margin-bottom:0.2em;letter-spacing:0.05em;text-transform:uppercase;color:#222;text-align:center;line-height:1.1;">
+    <label style="font-size:2.5em;font-weight:bold;margin-bottom:0.2em;letter-spacing:0.05em;text-transform:uppercase;text-align:center;line-height:1.1;">
       ${label}
     </label>
     <div style="display:flex;flex-direction:row;align-items:center;justify-content:center;gap:1em;">
