@@ -1,94 +1,101 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Creatine</title>
-    <style>
-      body,
-      h1,
-      input,
-      button,
-      select,
-      textarea,
-      div,
-      label,
-      span,
-      p,
-      ul,
-      ol,
-      li,
-      a {
-        color: #444;
-      }
-      h1,
-      h2,
-      h3 {
-        line-height: 1.2;
-      }
-    </style>
-  </head>
-  <body>
-    <h1 style="font-size: 5rem; text-align: center">Creatine</h1>
-    <div
-      style="
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-      "
-    >
-      <script type="module" src="./numberSelector.js"></script>
-      <div
-        id="squat-control"
-        style="
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          margin-bottom: 2.5em;
-        "
-      ></div>
-      <div
-        id="bench-control"
-        style="
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          margin-bottom: 2.5em;
-        "
-      ></div>
-      <div
-        id="deadlift-control"
-        style="display: flex; flex-direction: column; align-items: center"
-      ></div>
-      <script type="module">
-        import { createNumberSelector } from "./numberSelector.js";
-        createNumberSelector({
-          container: document.getElementById("squat-control"),
-          label: "SQUAT",
-          storageKey: "squat-value",
-          min: 20,
-          max: 160,
-          step: 1,
-        });
-        createNumberSelector({
-          container: document.getElementById("bench-control"),
-          label: "BENCH",
-          storageKey: "bench-value",
-          min: 20,
-          max: 120,
-          step: 1,
-        });
-        createNumberSelector({
-          container: document.getElementById("deadlift-control"),
-          label: "DEADLIFT",
-          storageKey: "deadlift-value",
-          min: 20,
-          max: 200,
-          step: 1,
-        });
-      </script>
-    </div>
-  </body>
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Creatine</title>
+        <style>
+            body,
+            h1,
+            input,
+            button,
+            select,
+            textarea,
+            div,
+            label,
+            span,
+            p,
+            ul,
+            ol,
+            li,
+            a {
+                color: #444;
+            }
+            h1,
+            h2,
+            h3 {
+                line-height: 1.2;
+            }
+        </style>
+    </head>
+    <body>
+        <h1 style="font-size: 5rem; text-align: center">Creatine</h1>
+        <div
+            style="
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+            "
+        >
+            <script type="module" src="./numberSelector.js"></script>
+            <div
+                id="squat-control"
+                style="
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    margin-bottom: 2.5em;
+                "
+            ></div>
+            <div
+                id="bench-control"
+                style="
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    margin-bottom: 2.5em;
+                "
+            ></div>
+            <div
+                id="deadlift-control"
+                style="
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                "
+            ></div>
+            <script type="module">
+                import { createNumberSelector } from "./numberSelector.js";
+                createNumberSelector({
+                    container: document.getElementById("squat-control"),
+                    label: "SQUAT",
+                    storageKey: "squat-value",
+                    rpeStorageKey: "squat-rpe",
+                    min: 20,
+                    max: 160,
+                    step: 1,
+                });
+                createNumberSelector({
+                    container: document.getElementById("bench-control"),
+                    label: "BENCH",
+                    storageKey: "bench-value",
+                    rpeStorageKey: "bench-rpe",
+                    min: 20,
+                    max: 120,
+                    step: 1,
+                });
+                createNumberSelector({
+                    container: document.getElementById("deadlift-control"),
+                    label: "DEADLIFT",
+                    storageKey: "deadlift-value",
+                    rpeStorageKey: "deadlift-rpe",
+                    min: 20,
+                    max: 200,
+                    step: 1,
+                });
+            </script>
+        </div>
+    </body>
 </html>
