@@ -36,7 +36,6 @@ export function createNumberSelector({
         <option value="8"  >8</option>
         <option value="9"  >9</option>
       </select>
-      <span style="font-size:2em;margin-left:-0.3em;font-family:SFMono-Regular,Consolas,Liberation Mono,Menlo,Courier,monospace;">x3</span>
     </div>
   `;
 
