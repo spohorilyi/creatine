@@ -22,7 +22,10 @@ export function createNumberSelector({
   // Create DOM structure
   container.innerHTML = `
     <label style="font-size:2.5em;font-weight:bold;margin-bottom:0.2em;letter-spacing:0.05em;text-transform:uppercase;text-align:center;line-height:1.1;">
+    <div style="display:flex;flex-direction:row;align-items:center;justify-content:center;gap:1em;margin:10;">
       ${label}
+      <div class="number-1rm"></div>
+      </div>
     </label>
     <div style="display:flex;flex-direction:row;align-items:center;justify-content:center;gap:1em;margin:10;">
       <div class="percentages-row" style="display:flex;flex-direction:row;gap:0.5em;font-size:2em;justify-content:flex-end;align-items:center;min-width:1ch;font-family:SFMono-Regular,Consolas,Liberation Mono,Menlo,Courier,monospace;"></div>
@@ -43,6 +46,7 @@ export function createNumberSelector({
   const percentsEl = container.querySelector(".percentages-row");
   const kgEl = container.querySelector(".number-kg");
   const rpeEl = container.querySelector(".number-rpe");
+  const onermEl = container.querySelector(".number-1rm");
 
   let value = initial;
   if (value == null) {
@@ -62,7 +66,7 @@ export function createNumberSelector({
 
   function updateDisplay() {
     el.textContent = String(value).padStart(3, "\u00A0");
-    // percentsEl.innerHTML = `<span>${String(Math.round((value * rpeChart[10][1]) / rpeChart[rpeValue][baseReps]))}</span>`;
+    onermEl.innerHTML = `<span>(${String(Math.round((value * rpeChart[10][1]) / rpeChart[rpeValue][baseReps]))})</span>`;
     percentsEl.innerHTML = `<span>${String(Math.round((value * 0.6) / rpeChart[rpeValue][baseReps]))}-${String(Math.round((value * 0.75) / rpeChart[rpeValue][baseReps]))}</span>`;
     kgEl.textContent = "kg";
     if (onChange) onChange(value);
