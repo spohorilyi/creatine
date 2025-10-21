@@ -24,8 +24,8 @@ export function createNumberSelector({
     <label style="font-size:2.5em;font-weight:bold;margin-bottom:0.2em;letter-spacing:0.05em;text-transform:uppercase;text-align:center;line-height:1.1;">
       ${label}
     </label>
-    <div style="display:flex;flex-direction:row;align-items:center;justify-content:center;gap:1em;">
-      <div class="percentages-row" style="display:flex;flex-direction:row;gap:1em;font-size:2em;justify-content:flex-end;align-items:center;min-width:10ch;font-family:SFMono-Regular,Consolas,Liberation Mono,Menlo,Courier,monospace;"></div>
+    <div style="display:flex;flex-direction:row;align-items:center;justify-content:center;gap:1em;margin:10;">
+      <div class="percentages-row" style="display:flex;flex-direction:row;gap:0.5em;font-size:2em;justify-content:flex-end;align-items:center;min-width:1ch;font-family:SFMono-Regular,Consolas,Liberation Mono,Menlo,Courier,monospace;"></div>
       <div class="number-selector" tabindex="0" style="user-select:none;width:4ch;height:60px;display:flex;align-items:center;justify-content:center;font-size:2em;font-family:SFMono-Regular,Consolas,Liberation Mono,Menlo,Courier,monospace;border:2px solid #888;border-radius:8px;background:#f9f9f9;box-shadow:0 2px 8px #0001;touch-action:pan-y;cursor:pointer;box-sizing:border-box;padding:0.6em;margin:0;">0</div>
       <span class="number-kg" style="font-size:2em;margin-left:-0.3em;font-family:SFMono-Regular,Consolas,Liberation Mono,Menlo,Courier,monospace;">kg</span>
       <span style="font-size:2em;margin-left:-0.3em;font-family:SFMono-Regular,Consolas,Liberation Mono,Menlo,Courier,monospace;">@</span>
@@ -62,8 +62,8 @@ export function createNumberSelector({
 
   function updateDisplay() {
     el.textContent = String(value).padStart(3, "\u00A0");
-    percentsEl.innerHTML = `<span>${String(Math.round((value * rpeChart[10][1]) / rpeChart[rpeValue][baseReps])).padStart(3, "\u00A0")}kg</span>`;
-    percentsEl.innerHTML += `<span>${String(Math.round((value * 0.6) / rpeChart[rpeValue][baseReps])).padStart(3, "\u00A0")}-${String(Math.round((value * 0.75) / rpeChart[rpeValue][baseReps]))}kg</span>`;
+    // percentsEl.innerHTML = `<span>${String(Math.round((value * rpeChart[10][1]) / rpeChart[rpeValue][baseReps]))}</span>`;
+    percentsEl.innerHTML = `<span>${String(Math.round((value * 0.6) / rpeChart[rpeValue][baseReps]))}-${String(Math.round((value * 0.75) / rpeChart[rpeValue][baseReps]))}</span>`;
     kgEl.textContent = "kg";
     if (onChange) onChange(value);
   }
